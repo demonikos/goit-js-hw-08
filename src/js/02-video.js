@@ -101,7 +101,7 @@ function currTime(currentTime) {
 }
 
 window.addEventListener('load', event => {
-    player.setCurrentTime(load(LOCALSTORAGE_KEY) || 0);
-  });
+  player.setCurrentTime(load(LOCALSTORAGE_KEY) || 0);
+});
 
 // --------------------/-/-/-/-/-/-/----------------
