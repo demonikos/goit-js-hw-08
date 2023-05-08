@@ -10,7 +10,6 @@ const user = {
 const form = document.querySelector('form');
 const input = document.querySelector('input');
 const area = document.querySelector('textarea');
-const button = document.querySelector('button');
 
 form.addEventListener('input', throttle(curValue, 500));
 
@@ -21,25 +20,42 @@ function curValue(user) {
 }
 
 window.addEventListener('load', event => {
-  const a = load(LOCALSTORAGE_KEY);
-  if (a != undefined) {
-    // console.log("not empty - ", a);
-    input.value = a.email;
-    area.value = a.message;
-  } else {
-    // console.log("it's empty")
+  const data = load(LOCALSTORAGE_KEY);
+  if (data != undefined) {
+    input.value = data.email;
+    area.value = data.message;
   }
 });
 
-button.addEventListener('click', onButtonClick);
+// --------------------//-----------------
 
-function onButtonClick(event) {
-  event.preventDefault();
+// button.addEventListener('click', onButtonClick);
+
+// function onButtonClick(event) {
+//   event.preventDefault();
+//   user.email = load(LOCALSTORAGE_KEY).email;
+//   user.message = load(LOCALSTORAGE_KEY).message;
+//   console.log(user);
+//   form.reset();
+//   localStorage.removeItem(LOCALSTORAGE_KEY);
+// }
+
+// --------------------//-----------------
+
+form.addEventListener('submit', onSubmitForm);
+
+function onSubmitForm(event) {
+  event.preventDefault();  
+  const {elements : {email, message}} = event.currentTarget;
+  if (email.value === "" || message.value === ""){
+      alert("Warning, all fields must be filled")
+  } else {
   user.email = load(LOCALSTORAGE_KEY).email;
   user.message = load(LOCALSTORAGE_KEY).message;
   console.log(user);
-  form.reset();
   localStorage.removeItem(LOCALSTORAGE_KEY);
+  form.reset();
+  }
 }
 
 const save = (key, value) => {
